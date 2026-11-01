@@ -6,7 +6,7 @@
 
 ## Schedule (Not Urgent + Important) - V2.0+
 - Formatting journal entries to look organized.
-- Storing each journal entry as its own individual `.txt` file.
+- Allowing the user to pick his or her own font so that each entry feels more personalized.
 
 ## Delegate (Urgent + Not Important) - Use Existing Tools
 - Java's `java.time` package to obtain dates and times.
