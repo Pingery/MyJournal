@@ -10,6 +10,7 @@ The goal of this project is to create a journal that a person can use to track h
 ## Future Plans
 - Figuring out the specifics on the formatting of the template (font size, font, etc.)
 - Allowing the user to pick his or her own font so that the journal entries feel more personalized.
+- Allowing the user to pick a theme for the journal that goes beyond just font and font size. Maybe like the color of the background or even the color of the text.
 
 ## Tech Stack
 - Java
