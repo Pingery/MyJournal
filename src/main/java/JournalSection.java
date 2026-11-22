@@ -1,3 +1,4 @@
+package main.java;
 
 public class JournalSection {
     private String name;
