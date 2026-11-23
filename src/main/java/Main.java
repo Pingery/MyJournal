@@ -1,4 +1,6 @@
 
+package main.java;
+
 public class Main {
     void main() {
         IO.println("==============================");
@@ -8,5 +10,8 @@ public class Main {
 
         IO.println("Welcome to My Journal!");
         IO.println("A personal space for your thoughts!");
+
+        JournalApp app = new JournalApp();
+        app.start();
     }
 }
