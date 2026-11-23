@@ -13,15 +13,19 @@ public class JournalApp {
     }
 
     public void start() {
-        ArrayList<String> availableSections = sectionLibrary.getSections();
-
-        currentEntry.addSection(new JournalSection(availableSections.get(0)));
-        currentEntry.addSection(new JournalSection(availableSections.get(1)));
-        currentEntry.addSection(new JournalSection(availableSections.get(2)));
-
         SwingUtilities.invokeLater(() ->
-                new JournalEditor(currentEntry.getSections())
+                new SectionSelector(sectionLibrary, this::openJournal)
         );
+    }
+
+    private void openJournal(ArrayList<JournalSection> selectedSections) {
+        currentEntry = new JournalEntry();
+
+        for (JournalSection section : selectedSections) {
+            currentEntry.addSection(section);
+        }
+
+        new JournalEditor(currentEntry.getSections());
     }
 
     public JournalEntry getCurrentEntry() {
