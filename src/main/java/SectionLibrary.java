@@ -1,60 +1,72 @@
+
 package main.java;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 
 public class SectionLibrary {
-    private ArrayList<String> sections;
+    private LinkedHashMap<String, ArrayList<String>> sections;
 
     public SectionLibrary() {
-        this.sections = new ArrayList<>();
+        this.sections = new LinkedHashMap<>();
 
+        sections.put("Daily Reflection", new ArrayList<>());
+        sections.get("Daily Reflection").add("Today's Thoughts");
+        sections.get("Daily Reflection").add("Daily Reflection");
+        sections.get("Daily Reflection").add("Highlights of the Day");
+        sections.get("Daily Reflection").add("Lowlights of the Day");
 
-        sections.add("Today's Thoughts");
-        sections.add("Daily Reflection");
-        sections.add("Highlights of the Day");
-        sections.add("Lowlights of the Day");
+        sections.put("Emotions", new ArrayList<>());
+        sections.get("Emotions").add("How I'm Feeling");
+        sections.get("Emotions").add("Emotional Check-In");
+        sections.get("Emotions").add("What Made Me Happy");
+        sections.get("Emotions").add("What's Bothering Me");
 
+        sections.put("Thankfulness", new ArrayList<>());
+        sections.get("Thankfulness").add("Things I'm Thankful For");
+        sections.get("Thankfulness").add("People I Appreciate");
+        sections.get("Thankfulness").add("Small Things I Enjoy");
 
-        sections.add("How I'm Feeling");
-        sections.add("Emotional Check-In");
-        sections.add("What Made Me Happy");
-        sections.add("What's Bothering Me");
+        sections.put("Personal Growth", new ArrayList<>());
+        sections.get("Personal Growth").add("Lessons Learned");
+        sections.get("Personal Growth").add("Personal Accomplishments");
+        sections.get("Personal Growth").add("Areas to Improve");
+        sections.get("Personal Growth").add("Things I Discovered");
 
+        sections.put("Goals and Plans", new ArrayList<>());
+        sections.get("Goals and Plans").add("Today's Goals");
+        sections.get("Goals and Plans").add("Future Goals");
+        sections.get("Goals and Plans").add("Priorities");
+        sections.get("Goals and Plans").add("Things to Look Forward To");
 
-        sections.add("Things I'm Grateful For");
-        sections.add("People I Appreciate");
-        sections.add("Small Things I Enjoy");
+        sections.put("Relationships", new ArrayList<>());
+        sections.get("Relationships").add("People on My Mind");
+        sections.get("Relationships").add("Meaningful Conversations");
+        sections.get("Relationships").add("Relationships");
 
+        sections.put("Creativity", new ArrayList<>());
+        sections.get("Creativity").add("Ideas");
+        sections.get("Creativity").add("Creative Thoughts");
+        sections.get("Creativity").add("Dreams");
+        sections.get("Creativity").add("Random Thoughts");
 
-        sections.add("Lessons Learned");
-        sections.add("Personal Accomplishments");
-        sections.add("Areas to Improve");
-        sections.add("Things I Discovered");
-
-
-        sections.add("Today's Goals");
-        sections.add("Future Goals");
-        sections.add("Priorities");
-        sections.add("Things to Look Forward To");
-
-
-        sections.add("People on My Mind");
-        sections.add("Meaningful Conversations");
-        sections.add("Relationships");
-
-
-        sections.add("Ideas");
-        sections.add("Creative Thoughts");
-        sections.add("Dreams");
-        sections.add("Random Thoughts");
-
-
-        sections.add("Brain Dump");
-        sections.add("Unfiltered Thoughts");
-        sections.add("Anything on My Mind");
+        sections.put("Free Writing", new ArrayList<>());
+        sections.get("Free Writing").add("Brain Dump");
+        sections.get("Free Writing").add("Unfiltered Thoughts");
+        sections.get("Free Writing").add("Anything on My Mind");
     }
 
-    public ArrayList<String> getSections() {
-        return new ArrayList<>(sections);
+    public ArrayList<String> getCategories() {
+        return new ArrayList<>(sections.keySet());
+    }
+
+    public ArrayList<String> getSections(String category) {
+        ArrayList<String> categorySections = sections.get(category);
+
+        if (categorySections == null) {
+            return new ArrayList<>();
+        }
+
+        return new ArrayList<>(categorySections);
     }
 }

@@ -1,3 +1,4 @@
+
 package main.java;
 
 import javax.swing.*;
@@ -23,16 +24,27 @@ public class JournalEditor {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(900, 600);
         frame.setLocationRelativeTo(null);
+        frame.getContentPane().setBackground(new Color(30, 30, 30));
 
         sectionPanel = new JPanel();
         sectionPanel.setLayout(new BoxLayout(sectionPanel, BoxLayout.Y_AXIS));
+        sectionPanel.setBackground(new Color(30, 30, 30));
+        sectionPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
         writingArea = new JTextArea();
         writingArea.setLineWrap(true);
         writingArea.setWrapStyleWord(true);
         writingArea.setFont(new Font("SansSerif", Font.PLAIN, 16));
+        writingArea.setBackground(new Color(38, 38, 38));
+        writingArea.setForeground(new Color(234, 234, 234));
+        writingArea.setCaretColor(new Color(234, 234, 234));
+        writingArea.setSelectionColor(new Color(75, 100, 140));
+        writingArea.setSelectedTextColor(Color.WHITE);
+        writingArea.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
 
         JScrollPane scrollPane = new JScrollPane(writingArea);
+        scrollPane.setBorder(BorderFactory.createEmptyBorder());
+        scrollPane.getViewport().setBackground(new Color(38, 38, 38));
 
         frame.add(sectionPanel, BorderLayout.WEST);
         frame.add(scrollPane, BorderLayout.CENTER);
@@ -49,10 +61,16 @@ public class JournalEditor {
             int index = i;
 
             JButton button = new JButton(sections.get(i).getName());
+            button.setBackground(new Color(55, 55, 55));
+            button.setForeground(Color.BLACK);
+            button.setFocusPainted(false);
+            button.setAlignmentX(Component.CENTER_ALIGNMENT);
+            button.setMaximumSize(new Dimension(Integer.MAX_VALUE, 40));
 
             button.addActionListener(event -> switchSection(index));
 
             sectionPanel.add(button);
+            sectionPanel.add(Box.createVerticalStrut(8));
         }
 
         sectionPanel.revalidate();
