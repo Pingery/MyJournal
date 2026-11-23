@@ -60,8 +60,15 @@ public class JournalEditor {
         saveButton.setFocusPainted(false);
         saveButton.addActionListener(event -> saveJournal());
 
+        JButton openButton = new JButton("Open Journal");
+        openButton.setBackground(new Color(55, 55, 55));
+        openButton.setForeground(Color.BLACK);
+        openButton.setFocusPainted(false);
+        openButton.addActionListener(event -> openJournal());
+
         JPanel bottomPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         bottomPanel.setBackground(new Color(30, 30, 30));
+        bottomPanel.add(openButton);
         bottomPanel.add(saveButton);
 
         frame.add(sectionPanel, BorderLayout.WEST);
@@ -113,5 +120,27 @@ public class JournalEditor {
     private void saveJournal() {
         saveCurrentSection();
         fileManager.saveEntry(journalEntry);
+    }
+
+    private void openJournal() {
+        JournalEntry loadedEntry = fileManager.loadEntry();
+
+        if (loadedEntry == null) {
+            return;
+        }
+
+        if (loadedEntry.getSections().isEmpty()) {
+            JOptionPane.showMessageDialog(frame,
+                    "This journal entry does not contain any sections.");
+            return;
+        }
+
+        sections = loadedEntry.getSections();
+        journalEntry = loadedEntry;
+        currentSectionIndex = 0;
+
+        displaySections();
+
+        writingArea.setText(sections.get(0).getContent());
     }
 }

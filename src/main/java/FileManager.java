@@ -1,10 +1,13 @@
+
 package main.java;
 
 import javax.swing.*;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 public class FileManager {
 
@@ -35,7 +38,7 @@ public class FileManager {
             int choice = JOptionPane.showConfirmDialog(
                     null,
                     "This file already exists. Do you want to replace it?",
-                    "Confirm Replacement",
+                    "Confirm Overwrite",
                     JOptionPane.YES_NO_OPTION
             );
 
@@ -63,6 +66,77 @@ public class FileManager {
         } catch (IOException exception) {
             JOptionPane.showMessageDialog(null,
                     "There was an error saving your journal entry.");
+        }
+    }
+
+    public JournalEntry loadEntry() {
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Open Journal Entry");
+
+        int result = fileChooser.showOpenDialog(null);
+
+        if (result != JFileChooser.APPROVE_OPTION) {
+            return null;
+        }
+
+        File file = fileChooser.getSelectedFile();
+
+        try {
+            List<String> lines = Files.readAllLines(file.toPath());
+
+            JournalEntry entry = new JournalEntry();
+            String separator = "================================";
+
+            int i = 0;
+
+            while (i < lines.size()) {
+                if (!lines.get(i).equals(separator)) {
+                    i++;
+                    continue;
+                }
+
+                if (i + 2 >= lines.size()) {
+                    break;
+                }
+
+                String sectionName = lines.get(i + 1);
+                i += 3;
+
+                if (i < lines.size() && lines.get(i).isEmpty()) {
+                    i++;
+                }
+
+                StringBuilder content = new StringBuilder();
+
+                while (i < lines.size() &&
+                        !lines.get(i).equals(separator)) {
+                    content.append(lines.get(i)).append("\n");
+                    i++;
+                }
+
+                String sectionContent = content.toString();
+
+                while (sectionContent.endsWith("\n")) {
+                    sectionContent = sectionContent.substring(
+                            0, sectionContent.length() - 1);
+                }
+
+                JournalSection section = new JournalSection(sectionName);
+                section.setContent(sectionContent);
+
+                entry.addSection(section);
+            }
+
+            JOptionPane.showMessageDialog(null,
+                    "Journal entry loaded successfully!");
+
+            return entry;
+
+        } catch (IOException exception) {
+            JOptionPane.showMessageDialog(null,
+                    "There was an error opening your journal entry.");
+
+            return null;
         }
     }
 }
