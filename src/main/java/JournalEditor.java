@@ -11,10 +11,18 @@ public class JournalEditor {
     private JTextArea writingArea;
     private ArrayList<JournalSection> sections;
     private int currentSectionIndex;
+    private FileManager fileManager;
+    private JournalEntry journalEntry;
 
     public JournalEditor(ArrayList<JournalSection> sections) {
         this.sections = sections;
         this.currentSectionIndex = 0;
+        this.fileManager = new FileManager();
+        this.journalEntry = new JournalEntry();
+
+        for (JournalSection section : sections) {
+            journalEntry.addSection(section);
+        }
 
         createWindow();
     }
@@ -46,8 +54,19 @@ public class JournalEditor {
         scrollPane.setBorder(BorderFactory.createEmptyBorder());
         scrollPane.getViewport().setBackground(new Color(38, 38, 38));
 
+        JButton saveButton = new JButton("Save Journal");
+        saveButton.setBackground(new Color(55, 55, 55));
+        saveButton.setForeground(Color.BLACK);
+        saveButton.setFocusPainted(false);
+        saveButton.addActionListener(event -> saveJournal());
+
+        JPanel bottomPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        bottomPanel.setBackground(new Color(30, 30, 30));
+        bottomPanel.add(saveButton);
+
         frame.add(sectionPanel, BorderLayout.WEST);
         frame.add(scrollPane, BorderLayout.CENTER);
+        frame.add(bottomPanel, BorderLayout.SOUTH);
 
         displaySections();
 
@@ -89,5 +108,10 @@ public class JournalEditor {
         if (!sections.isEmpty()) {
             sections.get(currentSectionIndex).setContent(writingArea.getText());
         }
+    }
+
+    private void saveJournal() {
+        saveCurrentSection();
+        fileManager.saveEntry(journalEntry);
     }
 }

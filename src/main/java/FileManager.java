@@ -31,6 +31,19 @@ public class FileManager {
             file = new File(file.getAbsolutePath() + ".txt");
         }
 
+        if (file.exists()) {
+            int choice = JOptionPane.showConfirmDialog(
+                    null,
+                    "This file already exists. Do you want to replace it?",
+                    "Confirm Replacement",
+                    JOptionPane.YES_NO_OPTION
+            );
+
+            if (choice != JOptionPane.YES_OPTION) {
+                return;
+            }
+        }
+
         try (FileWriter writer = new FileWriter(file)) {
             writer.write("My Journal\n");
             writer.write("Date: " + entry.getDateCreated() + "\n\n");
